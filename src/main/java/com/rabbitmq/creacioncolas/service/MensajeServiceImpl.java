@@ -1,7 +1,6 @@
 package com.rabbitmq.creacioncolas.service;
 
-import com.rabbitmq.creacioncolas.config.RabbitMQConfig;
-import com.rabbitmq.creacioncolas.dto.MensajeDTO;
+import com.rabbitmq.creacioncolas.dto.DtoRabbit.MensajeColaDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,23 +12,21 @@ import org.springframework.stereotype.Service;
 public class MensajeServiceImpl implements MensajeService {
 
     private static final Logger log = LoggerFactory.getLogger(MensajeServiceImpl.class);
-
     private final RabbitTemplate rabbitTemplate;
+    private final String exchangeName;
+    private final String routingKey;
 
-    @Value("${spring.rabbitmq.exchange}")
-    private String EXCHANGE_NAME;
-
-    @Value("${spring.rabbitmq.binding}")
-    private String ROUTING_KEY;
-
-    @Autowired
-    public MensajeServiceImpl(RabbitTemplate rabbitTemplate) {
+    public MensajeServiceImpl(RabbitTemplate rabbitTemplate,
+                              @Value("${rabbitmq.exchange.name}") String exchangeName,
+                              @Value("${rabbitmq.routing.key}") String routingKey) {
         this.rabbitTemplate = rabbitTemplate;
+        this.exchangeName = exchangeName;
+        this.routingKey = routingKey;
     }
 
     @Override
-    public void enviarMensaje(MensajeDTO mensajeDTO) {
-        log.info("Enviando DTO al exchange '{}' con la routing key '{}'", EXCHANGE_NAME, ROUTING_KEY);
-        rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY, mensajeDTO);
+    public void enviarMensaje(MensajeColaDto mensajeDto) {
+        log.info("Enviando DTO al exchange '{}' con la routing key '{}'", exchangeName, routingKey);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, mensajeDto);
     }
 }

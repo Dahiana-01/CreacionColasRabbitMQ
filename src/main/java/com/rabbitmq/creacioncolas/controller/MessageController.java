@@ -1,6 +1,6 @@
 package com.rabbitmq.creacioncolas.controller;
 
-import com.rabbitmq.creacioncolas.dto.MensajeDTO;
+import com.rabbitmq.creacioncolas.dto.DtoRabbit.MensajeColaDto;
 import com.rabbitmq.creacioncolas.service.MensajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/mensajes")
+@RequestMapping("/api/qa-RegistroNomina-Queue")
 public class MessageController {
 
     private final MensajeService mensajeService;
@@ -21,9 +21,9 @@ public class MessageController {
     }
 
     @PostMapping("/enviar")
-    public ResponseEntity<String> enviarMensaje(@RequestBody MensajeDTO mensajeDTO) {
-        mensajeService.enviarMensaje(mensajeDTO);
-        return ResponseEntity.ok("Mensaje DTO enviado exitosamente a la cola.");
+    public ResponseEntity<String> enviarMensaje(@RequestBody MensajeColaDto mensajeColaDto) {
+        mensajeService.enviarMensaje(mensajeColaDto);
+        return ResponseEntity.ok("Mensaje enviado exitosamente a la cola RabbitMQ.");
     }
 }
 

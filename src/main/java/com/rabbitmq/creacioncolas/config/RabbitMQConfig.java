@@ -18,13 +18,13 @@ public class RabbitMQConfig {
 
     private static final Logger log = LoggerFactory.getLogger(RabbitMQConfig.class);
 
-    @Value("${spring.rabbitmq.queue}")
+    @Value("${rabbitmq.queue.name}")
     private String QUEUE_NAME;
 
-    @Value("${spring.rabbitmq.exchange}")
+    @Value("${rabbitmq.exchange.name}")
     private String EXCHANGE_NAME;
 
-    @Value("${spring.rabbitmq.binding}")
+    @Value("${rabbitmq.routing.key}")
     private String ROUTING_KEY;
 
     private final AmqpAdmin amqpAdmin;

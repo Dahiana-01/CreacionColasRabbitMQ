@@ -1,7 +1,7 @@
 package com.rabbitmq.creacioncolas.service;
 
-import com.rabbitmq.creacioncolas.dto.MensajeDTO;
+import com.rabbitmq.creacioncolas.dto.DtoRabbit.MensajeColaDto;
 
 public interface MensajeService {
-    void enviarMensaje(MensajeDTO mensajeDTO);
+    void enviarMensaje(MensajeColaDto mensaje);
 }
